@@ -17,8 +17,8 @@ module.exports = (client) =>{
             }
         }
 
-        const { CLIENT_ID, GUILD_ID} = process.env;
-        const rest = new REST({ version: '9'}).setToken(process.env.BOT_TOKEN);
+        const { CLIENT_ID, GUILD_ID, BOT_TOKEN } = process.env;
+        const rest = new REST({ version: '9'}).setToken(BOT_TOKEN);
         try {
             console.log('Carregando aplicação (/)Comandos sendo carregados...');
 

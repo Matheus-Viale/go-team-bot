@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {verificaMediaPresenca} = require('../../helpers/attendance/verificaMediaPresenca.js');
-
+const { verifyUserRoles } = require('../../helpers/verifyUserRoles.js');
+const {roleResponsavelTwitch} = require('../../helpers/globalVariables.js');
 
 
 
@@ -9,8 +9,13 @@ module.exports = {
         .setName('ping')
         .setDescription('Retorna meu ping!'),
     async execute(interaction, client){
-
-        verificaMediaPresenca(7, 'streamelements');
+        if(!await verifyUserRoles(interaction.member, roleResponsavelTwitch)){
+            interaction.reply({
+                content: 'Você não tem permissão para usar este comando!',
+                ephemeral: true
+            })
+            return;
+        }
         //PING ORIGINAL
         const message = await interaction.deferReply({
             fetchReply: true

@@ -9,11 +9,11 @@ const { roleResponsavelTwitch, guildId } = require('../../helpers/globalVariable
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('staffconsultapresenca')
-        .setDescription('Retorna as informações sobre sua presença nas lives!')
+        .setDescription('Retorna as informações sobre presença nas lives! [STAFF]')
         .addIntegerOption((option) => 
                 option
                     .setName('periodo')
-                    .setDescription('Consultar a sua presença em qual período?')
+                    .setDescription('Consultar a presença em qual período?')
                     .setChoices(
                         {name: 'Uma Semana', value: 7 },
                         {name: 'Duas Semanas', value: 1 },
