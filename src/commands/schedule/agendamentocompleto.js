@@ -78,7 +78,7 @@ module.exports = {
         const dia = await interaction.options.getInteger('dia');
         const dataAgendamento = new Date();
         dataAgendamento.setDate(dataAgendamento.getDate() + dia)
-        const dataStringAgendamento = dataAgendamento.toLocaleDateString();
+        const dataStringAgendamento = dataAgendamento.toLocaleDateString('pt-BR');
 
         let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
         if(agendamentoCriado){

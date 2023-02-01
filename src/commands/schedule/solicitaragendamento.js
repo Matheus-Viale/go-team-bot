@@ -76,8 +76,9 @@ module.exports = {
         const horarioString = horario + ':00';
         const preenchimento = await interaction.options.getString('preenchimento');
         const horaSolicitacao = new Date().getUTCHours();
+        const horarioCorreto = horaSolicitacao < 15 || horaSolicitacao > 21;
 
-        if(preenchimento != 'sim' && horaSolicitacao < 15 || horaSolicitacao > 21){
+        if(preenchimento != 'sim' && horarioCorreto){
             await interaction.reply({
                 content: 'O horário de agendamento é das 12:00 às 18:00 (Horário de Brasilia) ou 15:00 às 21:00 (Horário de Lisboa), caso a STAFF tenha solicitado, marcar a opção SIM em preenchimento',
                 ephemeral: true

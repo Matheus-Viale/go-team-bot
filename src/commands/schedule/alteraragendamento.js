@@ -80,7 +80,7 @@ module.exports = {
         const dataAgendamento = new Date();
         dataAgendamento.setDate(dataAgendamento.getDate() + dia);
         const diaAgendamento = dataAgendamento.getDate();
-        const dataStringAgendamento = dataAgendamento.toLocaleDateString();
+        const dataStringAgendamento = dataAgendamento.toLocaleDateString('pt-BR');
 
         let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
         

@@ -6,7 +6,7 @@ module.exports = {
     once: true,
     async execute(client){
         agendaAberturaFechamento(client);
-        agendaLimpezaCanais(client);
+        //agendaLimpezaCanais(client);
         console.log(`${client.user.tag} está funcionando!`);
     }
 }
