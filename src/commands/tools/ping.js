@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { verifyUserRoles } = require('../../helpers/verifyUserRoles.js');
 const {roleResponsavelTwitch} = require('../../helpers/globalVariables.js');
+const schedule = require('node-schedule');
 
 
 
@@ -16,6 +17,7 @@ module.exports = {
             })
             return;
         }
+        console.log(schedule.scheduledJobs)
         //PING ORIGINAL
         const message = await interaction.deferReply({
             fetchReply: true

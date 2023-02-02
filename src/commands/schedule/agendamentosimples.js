@@ -1,8 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {roleResponsavelTwitch} = require('../../helpers/globalVariables.js');
+const {roleResponsavelTwitch, channelAgendamentoStaff} = require('../../helpers/globalVariables.js');
 const {verifyUserRoles} = require('../../helpers/verifyUserRoles.js');
 const Agendamento = require('../../schemas/agendamento.js');
 const { agendaVerificadorPresenca } = require('../../helpers/schedule/agendaVerificadorPresenca.js');
+const { agendaMensagemStreamer } = require('../../helpers/schedule/agendaMensagemStreamer.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -60,6 +61,7 @@ module.exports = {
         }
 
         const streamer = await interaction.options.getMember('streamer');
+        const streamerId = streamer.id;
         const streamerNickname = streamer.displayName;
 
         if(!streamerNickname.toLowerCase().includes('twitch.tv/')){
@@ -96,9 +98,10 @@ module.exports = {
             return
         }
 
-        agendamentoCriado[horarioTag] = streamerTwitch;
+        agendamentoCriado[horarioTag] = streamerNickname;
         await agendamentoCriado.save().then(async novoAgendamento =>{
-            await agendaVerificadorPresenca(dataAgendamento, diaAgendamento, horario, streamerNickname, client);
+            await agendaVerificadorPresenca(dataAgendamento, diaAgendamento, horario, streamerTwitch, client);
+            await agendaMensagemStreamer(dataAgendamento, diaAgendamento, horario, streamerTwitch, streamerId, streamerNickname, dataStringAgendamento, client);
             interaction.reply({
                 content: `Agenda da data ${novoAgendamento.diaAgendamento} atualizada com o streamer ${streamerTwitch} agendado para o horário das ${horario}:00`
             })

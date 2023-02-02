@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {roleResponsavelTwitch} = require('../../helpers/globalVariables.js');
+const {roleResponsavelTwitch, channelAgendamentoStaff} = require('../../helpers/globalVariables.js');
 const {verifyUserRoles} = require('../../helpers/verifyUserRoles.js');
 const Agendamento = require('../../schemas/agendamento.js');
 const { removeAgendaVerificadorPresenca } = require('../../helpers/schedule/removeAgendaVerificadorPresenca.js');

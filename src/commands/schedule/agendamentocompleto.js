@@ -133,7 +133,7 @@ module.exports = {
 
         await agendamentoCriado.save().then(async novoAgendamento =>{
             interaction.reply({
-                content: `Agendamento para a data ${novoAgendamento.diaAgendamento} foi criado com sucesso! Para ver a agenda usar o comando /consultaragenda`
+                content: `Agendamento para a data ${novoAgendamento.diaAgendamento} foi criado com sucesso! Para ver a agenda usar o comando /staffconsultaragenda`
             });
         })
     }

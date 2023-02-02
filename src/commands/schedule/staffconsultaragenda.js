@@ -78,13 +78,13 @@ module.exports = {
                 }
                 
                 if(i != 22){
-                    fieldsEmbed.push({name: `:alarm_clock: ${i}:00 às ${i+2}:00 :alarm_clock:`, value: `https://www.twitch.tv/${agendamentoCriado[horarioTag]}`},
+                    fieldsEmbed.push({name: `:alarm_clock: ${i}:00 às ${i+2}:00 :alarm_clock:`, value: `https://www.twitch.tv/${agendamentoCriado[horarioTag].split('/')[1]}`},
                     { name: '\u200B', value: '\u200B' },)
                     continue;
                 }
 
                 if(i == 22){
-                    fieldsEmbed.push({name: `:alarm_clock: ${i}:00 às 00:00 :alarm_clock:`, value: `https://www.twitch.tv/${agendamentoCriado[horarioTag]}`})
+                    fieldsEmbed.push({name: `:alarm_clock: ${i}:00 às 00:00 :alarm_clock:`, value: `https://www.twitch.tv/${agendamentoCriado[horarioTag].split('/')[1]}`})
                     continue;
                 }
 

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const {roleResponsavelTwitch} = require('../../helpers/globalVariables.js');
+const {roleResponsavelTwitch, channelAgendamentoStaff} = require('../../helpers/globalVariables.js');
 const {verifyUserRoles} = require('../../helpers/verifyUserRoles.js');
 const Agendamento = require('../../schemas/agendamento.js');
 const { agendaVerificadorPresenca } = require('../../helpers/schedule/agendaVerificadorPresenca.js');
@@ -103,7 +103,7 @@ module.exports = {
         await agendamentoCriado.save().then(async novoAgendamento =>{
             await removeAgendaVerificadorPresenca(diaAgendamento, horario);
             await removeAgendaMensagemStreamer(diaAgendamento, horario);
-            await agendaVerificadorPresenca(dataAgendamento, diaAgendamento, horario, streamerNickname, client);
+            await agendaVerificadorPresenca(dataAgendamento, diaAgendamento, horario, streamerTwitch, client);
             await agendaMensagemStreamer(dataAgendamento, diaAgendamento, horario, streamerTwitch, streamerId, streamerNickname, dataStringAgendamento, client);
             await interaction.reply({
                 content: `Agendamento da data ${novoAgendamento.diaAgendamento} atualizado com o streamer ${streamerTwitch} agendado para o horário das ${horario}:00`
