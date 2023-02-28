@@ -10,7 +10,7 @@ module.exports = {
     once: true,
     async execute(client: Client){
         agendaAberturaFechamento(client);
-        //startBot(clientWpp);
+        startBot(clientWpp);
         createScheduleOnReady(client);
         //agendaLimpezaCanais(client);
         console.log(`${client.user.tag} está funcionando!`);
