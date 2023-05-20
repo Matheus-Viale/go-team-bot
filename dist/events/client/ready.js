@@ -11,8 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const createScheduleOnReady_js_1 = require("../../helpers/events/createScheduleOnReady.js");
 const agendaAberturaFechamento_js_1 = require("../../helpers/schedule/agendaAberturaFechamento.js");
-const botWppInitialize_js_1 = require("../../helpers/wpp/botWppInitialize.js");
-const botWppInitialize_js_2 = require("../../helpers/wpp/botWppInitialize.js");
 const { agendaLimpezaCanais } = require("../../helpers/schedule/agendaLimpezaCanais.js");
 module.exports = {
     name: 'ready',
@@ -20,7 +18,7 @@ module.exports = {
     execute(client) {
         return __awaiter(this, void 0, void 0, function* () {
             (0, agendaAberturaFechamento_js_1.default)(client);
-            (0, botWppInitialize_js_1.startBot)(botWppInitialize_js_2.clientWpp);
+            //startBot(clientWpp);
             (0, createScheduleOnReady_js_1.default)(client);
             //agendaLimpezaCanais(client);
             console.log(`${client.user.tag} está funcionando!`);

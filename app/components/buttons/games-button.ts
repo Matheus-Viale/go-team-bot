@@ -28,7 +28,7 @@ module.exports = {
         
 
         try {
-            member.roles.add(role);
+            member.roles.add(role).catch(console.error);
         } catch (error) {
             console.log(error)
         }

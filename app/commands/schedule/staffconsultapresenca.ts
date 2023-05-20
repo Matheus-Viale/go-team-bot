@@ -60,16 +60,16 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor(0x6441A5)
-            .setTitle(`PRESENÇA DE <@${streamerId}> NOS ÚLTIMOS ${periodo} DIAS`)
+            .setTitle(`PRESENÇA DE ${streamerTwitch.toUpperCase()} NOS ÚLTIMOS ${periodo} DIAS`)
             .setAuthor({ name: 'GO TEAM STREAMERS', iconURL: 'https://i.imgur.com/j1yOXKJ.png'})
             .setThumbnail('https://i.imgur.com/j1yOXKJ.png')
             .addFields(
                 {name: '\u200B', value: '\u200B'},
-                {name: 'Média', value: `${streamerTwitch} esteve presente em ${presencaInfo.mediaPresenca} das verificações de das lives!`},
+                {name: 'Média', value: `<@${streamerId}> esteve presente em ${presencaInfo.mediaPresenca} das verificações de das lives!`},
                 {name: '\u200B', value: '\u200B'},
                 {name: 'Total de Lives', value: `Nos últimos ${periodo} dias houveram ${presencaInfo.totalLives} verificações de lives!`},
                 {name: '\u200B', value: `\u200B`},
-                {name: 'Presença', value: `${streamerTwitch} estava presente em ${presencaInfo.presenca} verificações de lives!`},
+                {name: 'Presença', value: `<@${streamerId}> estava presente em ${presencaInfo.presenca} verificações de lives!`},
             )
         ;
 

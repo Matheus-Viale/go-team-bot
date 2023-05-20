@@ -1,5 +1,5 @@
 import { Client, ModalSubmitInteraction, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, ChannelType, PermissionFlagsBits, GuildMember, GuildTextBasedChannel } from 'discord.js';
-const { verifyUserIsOnlineTwitch } = require("../../helpers/verifyUserIsOnlineTwitch");
+import verifyUserIsOnlineTwitch from "../../helpers/verifyUserIsOnlineTwitch";
 const { channelRecrutados, categoryTickets, roleEveryone, roleRecrutador, channelComoFunciona, channelRegras, roleOpenTicket } = require('../../helpers/globalVariables.js');
 
 
@@ -56,9 +56,10 @@ module.exports = {
                 const embedTicket1 = new EmbedBuilder()
                     .setColor(0x6441A5)
                     .setAuthor({name: 'Go Team Streamers', iconURL:'https://i.imgur.com/j1yOXKJ.png'})
-                    .setTitle(`Recrutamento de <@${member.id}>`)
+                    .setTitle(`Recrutamento de ${member.displayName}`)
                     .setDescription(`Ficamos felizes em saber que você tem interesse em fazer parte da nossa equipe, agora vamos passar algumas instruções e confirmar as informações!\n\n`)
                     .addFields(
+                        {name:'Usuário:', value: `<@${member.id}>`},
                         {name:'Canal informado:', value: `${nomeTwitch}`},
                         {name:'Já é afiliado:', value: `${afiliadoTwitch}`},
                         {name:'Tempo com Streamer:', value: `${tempoLive}`},

@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
 const { roleStreamerGoTeam, roleOpenTicket } = require('../../helpers/globalVariables.js');
-const { verifyUserRoles } = require('../../helpers/verifyUserRoles.js');
 module.exports = {
     data: {
         name: 'quero-participar'
@@ -19,14 +19,14 @@ module.exports = {
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
             const member = interaction.member;
-            if (yield verifyUserRoles(member, roleStreamerGoTeam)) {
+            if (yield (0, verifyUserRoles_js_1.default)(member, roleStreamerGoTeam)) {
                 yield interaction.reply({
                     content: 'Você já faz parte do grupo da Go Team!',
                     ephemeral: true
                 });
                 return;
             }
-            if (yield verifyUserRoles(member, roleOpenTicket)) {
+            if (yield (0, verifyUserRoles_js_1.default)(member, roleOpenTicket)) {
                 yield interaction.reply({
                     content: `Você já possui um ticket em aberto`,
                     ephemeral: true

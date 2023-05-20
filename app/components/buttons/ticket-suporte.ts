@@ -1,6 +1,6 @@
 import { Client, ButtonInteraction, ActionRowBuilder, EmbedBuilder, PermissionFlagsBits, ButtonBuilder, ButtonStyle, ChannelType, GuildMember } from 'discord.js';
+import verifyUserRoles from '../../helpers/verifyUserRoles.js';
 const { roleStreamerGoTeam, roleOpenTicket, categoryTickets, roleEveryone, roleRecrutador } = require('../../helpers/globalVariables.js');
-const { verifyUserRoles } = require('../../helpers/verifyUserRoles.js');
 
 module.exports = {
     data:{

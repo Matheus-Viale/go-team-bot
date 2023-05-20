@@ -26,7 +26,7 @@ const enviaMensagemAbertura = async (client: Client) =>{
             {name: 'Horário', value: `A solicitação de agendamento pode ser feita das 12:00 às 21:00 (BR) / 15:00 às 00:00 (PT), e os agendamento são para o dia seguinte`},
             {name: '\u200B', value: `\u200B`},
             {name: 'Como solicitar?', value: 'Basta digitar o comando "/solicitaragendamento" e selecionar as opções de dia e hora'},
-            {name: 'Preenchimento?', value: 'Caso tenha passado do horário de solicitações e a STAFF informou que existem horários disponíves, basta usar a opção preenchimento SIM e poderá fazer a solicitação fora de horário'},
+            {name: 'Preenchimento?', value: 'Caso tenha passado do horário de solicitações e a STAFF informou que existem horários disponíves, basta enviar a sua solicitação normalmente!'},
             {name: 'AVISO!', value: 'O uso da opção de preenchimento sem autorização da STAFF resultará em advertência!'},
             {name: '\u200B', value: `\u200B`},
             {name: 'Requisitos para agendar!', value: '\u200B'},

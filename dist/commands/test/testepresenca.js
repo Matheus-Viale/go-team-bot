@@ -11,10 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
+const verificadorPresenca_js_1 = require("../../helpers/attendance/verificadorPresenca.js");
 const { roleResponsavelTwitch } = require('../../helpers/globalVariables.js');
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
-        .setName('ping')
+        .setName('testepresenca')
         .setDescription('Retorna meu ping!'),
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -26,6 +27,8 @@ module.exports = {
                 });
                 return;
             }
+            const teste = yield (0, verificadorPresenca_js_1.default)('horadrage');
+            console.log(teste);
             const message = yield interaction.deferReply({
                 fetchReply: true,
                 ephemeral: true

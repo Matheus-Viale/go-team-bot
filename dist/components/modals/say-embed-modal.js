@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
 module.exports = {
     data: {
         name: 'say-embed-modal'
@@ -16,6 +17,7 @@ module.exports = {
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
+            const embedBuilder = new discord_js_1.EmbedBuilder();
             const embed = eval(interaction.fields.getTextInputValue('sayEmbedInput'));
             yield interaction.channel.send({
                 embeds: [embed]

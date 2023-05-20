@@ -21,7 +21,6 @@ const enviaMensagemLive = async (streamer: string, horaAgendamento: number, clie
             {name: 'Horário', value: `⏰ ${horaAgendamento}:00 às ${horaAgendamento+2}:00 ⏰`, },
             {name: '\u200B', value: '\u200B'},
             {name: 'Regras para acompanhar a live!', value: '\u200B'},
-            {name: '\u200B', value: '\u200B'},
             {name: '\u200B', value: 'Não deixe a live mutada!'},
             {name: '\u200B', value: 'Lembramos que a presença é feita atráves dos usuários do chat!'},
             {name: '\u200B', value: 'Sempre que possível interaja no chat, gentileza gera gentileza!'},

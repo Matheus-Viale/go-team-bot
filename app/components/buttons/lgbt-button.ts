@@ -25,8 +25,8 @@ module.exports = {
         const memberNickname = member.displayName;
 
         try {
-            member.roles.add(role);
-            member.setNickname('🌈' + memberNickname);
+            member.roles.add(role).catch(console.error);
+            member.setNickname('🌈' + memberNickname).catch(console.error);
         } catch (error) {
             console.log(error)
         }

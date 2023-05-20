@@ -10,29 +10,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
-const { roleResponsavelTwitch } = require('../../helpers/globalVariables.js');
+const alteraStatusPreenchimento_1 = require("../../helpers/alteraStatusPreenchimento");
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
-        .setName('ping')
+        .setName('testepreenchimento')
         .setDescription('Retorna meu ping!'),
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
             const member = interaction.member;
-            if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.reply({
-                    content: 'Você não tem permissão para usar este comando!',
-                    ephemeral: true
-                });
-                return;
-            }
-            const message = yield interaction.deferReply({
-                fetchReply: true,
+            yield interaction.deferReply({
                 ephemeral: true
             });
-            const newMessage = `Atraso da API: ${client.ws.ping}ms\nPing do Usuário: ${message.createdTimestamp - interaction.createdTimestamp}ms`;
+            /*const preenchimentoCriado = new Preenchimento({
+                _id: new mongoose.Types.ObjectId()
+            })
+    
+            preenchimentoCriado.save().then(async novoPreenchimento =>{
+                console.log(novoPreenchimento._id)
+            })*/
+            const retorno = yield (0, alteraStatusPreenchimento_1.default)('ativado');
+            console.log(retorno);
             yield interaction.editReply({
-                content: newMessage
+                content: 'OK'
             });
         });
     }

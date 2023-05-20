@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
-const { verifyUserIsOnlineTwitch } = require("../../helpers/verifyUserIsOnlineTwitch");
+const verifyUserIsOnlineTwitch_1 = require("../../helpers/verifyUserIsOnlineTwitch");
 const { channelRecrutados, categoryTickets, roleEveryone, roleRecrutador, channelComoFunciona, channelRegras, roleOpenTicket } = require('../../helpers/globalVariables.js');
 module.exports = {
     data: {
@@ -29,7 +29,7 @@ module.exports = {
             const tempoLive = interaction.fields.getTextInputValue('tempoLive');
             const objetivo = interaction.fields.getTextInputValue('objetivo');
             const recomendacao = interaction.fields.getTextInputValue('recomendacao');
-            if ((yield verifyUserIsOnlineTwitch(nomeTwitch)) == 'inexistente') {
+            if ((yield (0, verifyUserIsOnlineTwitch_1.default)(nomeTwitch)) == 'inexistente') {
                 yield interaction.editReply({
                     content: `O canal ${nomeTwitch} não foi encontrado, verifique se está correto!`
                 });
@@ -62,9 +62,9 @@ module.exports = {
                     const embedTicket1 = new discord_js_1.EmbedBuilder()
                         .setColor(0x6441A5)
                         .setAuthor({ name: 'Go Team Streamers', iconURL: 'https://i.imgur.com/j1yOXKJ.png' })
-                        .setTitle(`Recrutamento de <@${member.id}>`)
+                        .setTitle(`Recrutamento de ${member.displayName}`)
                         .setDescription(`Ficamos felizes em saber que você tem interesse em fazer parte da nossa equipe, agora vamos passar algumas instruções e confirmar as informações!\n\n`)
-                        .addFields({ name: 'Canal informado:', value: `${nomeTwitch}` }, { name: 'Já é afiliado:', value: `${afiliadoTwitch}` }, { name: 'Tempo com Streamer:', value: `${tempoLive}` }, { name: '\u200B', value: 'Se alguma das suas informações estiverem incorretas, basta avisar aqui no chat que fecharemos o seu ticket e você poderá abrir um novo!' }, { name: '\u200B', value: '\u200B' })
+                        .addFields({ name: 'Usuário:', value: `<@${member.id}>` }, { name: 'Canal informado:', value: `${nomeTwitch}` }, { name: 'Já é afiliado:', value: `${afiliadoTwitch}` }, { name: 'Tempo com Streamer:', value: `${tempoLive}` }, { name: '\u200B', value: 'Se alguma das suas informações estiverem incorretas, basta avisar aqui no chat que fecharemos o seu ticket e você poderá abrir um novo!' }, { name: '\u200B', value: '\u200B' })
                         .setFooter({ text: `ID do Usuário: ${member.id}` });
                     const embedTicket2 = new discord_js_1.EmbedBuilder()
                         .setColor(0x6441A5)

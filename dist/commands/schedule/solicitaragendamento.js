@@ -10,10 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const verificadorPresenca_js_1 = require("../../helpers/attendance/verificadorPresenca.js");
 const verificaLivesRecentes_js_1 = require("../../helpers/attendance/verificaLivesRecentes.js");
 const verificaMediaPresenca_js_1 = require("../../helpers/attendance/verificaMediaPresenca.js");
+const verificaDias_js_1 = require("../../helpers/verificaDias.js");
 const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
-const { roleStreamerGoTeam, channelSolicitacaoAgendamentosStaff, channelMarcarTwitch, channelsSolicitacaoAgendamentosStaff } = require('../../helpers/globalVariables.js');
+const { roleStreamerGoTeam, channelMarcarTwitch, channelsSolicitacaoAgendamentosStaff } = require('../../helpers/globalVariables.js');
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName('solicitaragendamento')
@@ -49,11 +51,26 @@ module.exports = {
                 });
                 return;
             }
+            const streamerTwitch = streamerNickname.split('/')[1];
+            const verificaMod = yield (0, verificadorPresenca_js_1.default)(streamerTwitch.toLowerCase());
+            if (verificaMod.status != 200) {
+                if (verificaMod.status == 403) {
+                    interaction.editReply({
+                        content: 'Você não adicionou nosso canal como MOD na sua live, por gentileza no chat da sua live digite "/mod goteamstreamers" para adiciona-lo, isso é necessário para podermos verificar a presença nas lives!'
+                    });
+                    return;
+                }
+                else {
+                    interaction.editReply({
+                        content: `O erro ${verificaMod.status} ocorreu, favor comunique a STAFF sobre o ocorrido!`
+                    });
+                    return;
+                }
+            }
             let streamerAvatar = streamer.user.avatarURL();
             if (!streamerAvatar) {
                 streamerAvatar = 'https://cdn2.unrealengine.com/egs-discord-discord-s10-512x512-22ee7a1e5199.png';
             }
-            const streamerTwitch = streamerNickname.split('/')[1];
             const dia = interaction.options.getString('dia');
             const horario = interaction.options.getInteger('horario');
             const horarioString = horario + ':00';
@@ -66,13 +83,13 @@ module.exports = {
                 });
                 return;
             }
-            /*const situacaoAgendamento = verificaDias(dia);
-            if(!situacaoAgendamento.liberarAgendamento){
-                await interaction.editReply({
+            const situacaoAgendamento = (0, verificaDias_js_1.default)(dia);
+            if (!situacaoAgendamento.liberarAgendamento) {
+                yield interaction.editReply({
                     content: 'Os agendamentos são para o dia seguinte (ou para hoje caso seja um preenchimento), por favor, faça o agendamento selecionando o dia da semana correto!'
                 });
                 return;
-            }*/
+            }
             const embedUser = new discord_js_1.EmbedBuilder()
                 .setColor(0x6441A5)
                 .setTitle(streamerNickname)

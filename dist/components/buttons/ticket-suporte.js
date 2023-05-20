@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
+const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
 const { roleStreamerGoTeam, roleOpenTicket, categoryTickets, roleEveryone, roleRecrutador } = require('../../helpers/globalVariables.js');
-const { verifyUserRoles } = require('../../helpers/verifyUserRoles.js');
 module.exports = {
     data: {
         name: 'ticket-suporte'
@@ -24,13 +24,13 @@ module.exports = {
             const { ViewChannel, SendMessages, ReadMessageHistory } = discord_js_1.PermissionFlagsBits;
             const memberTagNumber = member.user.tag.split('#')[1];
             const roleOpenTicketFetch = yield guild.roles.fetch(roleOpenTicket);
-            if (!(yield verifyUserRoles(member, roleStreamerGoTeam))) {
+            if (!(yield (0, verifyUserRoles_js_1.default)(member, roleStreamerGoTeam))) {
                 yield interaction.editReply({
                     content: 'Você não tem permissão para usar esse recurso!'
                 });
                 return;
             }
-            if (yield verifyUserRoles(member, roleOpenTicket)) {
+            if (yield (0, verifyUserRoles_js_1.default)(member, roleOpenTicket)) {
                 yield interaction.editReply({
                     content: `Você já possui um ticket em aberto`
                 });

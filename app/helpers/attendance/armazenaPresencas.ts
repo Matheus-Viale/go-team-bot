@@ -6,6 +6,25 @@ const { channelListaPresenca } = require('../globalVariables.js');
 
 const armazenaPresencas = async (streamerTwitch: string, data: Date, client: Client) => {
     const retornoVerificadorPresenca = await verificadorPresenca(streamerTwitch);
+    const channel = (await client.channels.fetch(channelListaPresenca) as GuildTextBasedChannel);
+    
+    if(retornoVerificadorPresenca.status == 403){
+        const message = `O bot não conseguiu verificar as presenças pois o streamer ${streamerTwitch}, não adicionou o canal goteamstreamers como moderador.`
+        await channel.send({
+            content: message
+        }).catch(console.error);
+        return;
+    }
+
+
+    if(retornoVerificadorPresenca.status != 200){
+        const message = `O erro ${retornoVerificadorPresenca.status} ocorreu, a equipe de STAFF irá verificar a situação!`
+        await channel.send({
+            content: message
+        }).catch(console.error);
+        return;
+    }
+
     const viewersArray = retornoVerificadorPresenca.viewersArray;
     const viewersString = retornoVerificadorPresenca.viewersString;
     const qntdViewers = retornoVerificadorPresenca.qntdViewers;
@@ -32,9 +51,9 @@ const armazenaPresencas = async (streamerTwitch: string, data: Date, client: Cli
     listagemPresenca.markModified('viewers');
     await listagemPresenca.save().catch(console.error);
 
-    const channel = (await client.channels.fetch(channelListaPresenca) as GuildTextBasedChannel);
+    
     if(viewersString.length > 3500){
-        const messageSplit = viewersString.match(/.{1,3500}/g)
+        const messageSplit = viewersString.match(/.{1,1950}/g)
         await channel.send({
             content:`Streamer: ${streamerTwitch}\n\nViewers:`
         }).catch(console.error);

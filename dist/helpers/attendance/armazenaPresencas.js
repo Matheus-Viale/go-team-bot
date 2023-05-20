@@ -15,6 +15,21 @@ const mongoose_1 = require("mongoose");
 const { channelListaPresenca } = require('../globalVariables.js');
 const armazenaPresencas = (streamerTwitch, data, client) => __awaiter(void 0, void 0, void 0, function* () {
     const retornoVerificadorPresenca = yield (0, verificadorPresenca_js_1.default)(streamerTwitch);
+    const channel = yield client.channels.fetch(channelListaPresenca);
+    if (retornoVerificadorPresenca.status == 403) {
+        const message = `O bot não conseguiu verificar as presenças pois o streamer ${streamerTwitch}, não adicionou o canal goteamstreamers como moderador.`;
+        yield channel.send({
+            content: message
+        }).catch(console.error);
+        return;
+    }
+    if (retornoVerificadorPresenca.status != 200) {
+        const message = `O erro ${retornoVerificadorPresenca.status} ocorreu, a equipe de STAFF irá verificar a situação!`;
+        yield channel.send({
+            content: message
+        }).catch(console.error);
+        return;
+    }
     const viewersArray = retornoVerificadorPresenca.viewersArray;
     const viewersString = retornoVerificadorPresenca.viewersString;
     const qntdViewers = retornoVerificadorPresenca.qntdViewers;
@@ -37,9 +52,8 @@ const armazenaPresencas = (streamerTwitch, data, client) => __awaiter(void 0, vo
     listagemPresenca.viewers = listaViewers;
     listagemPresenca.markModified('viewers');
     yield listagemPresenca.save().catch(console.error);
-    const channel = yield client.channels.fetch(channelListaPresenca);
     if (viewersString.length > 3500) {
-        const messageSplit = viewersString.match(/.{1,3500}/g);
+        const messageSplit = viewersString.match(/.{1,1950}/g);
         yield channel.send({
             content: `Streamer: ${streamerTwitch}\n\nViewers:`
         }).catch(console.error);

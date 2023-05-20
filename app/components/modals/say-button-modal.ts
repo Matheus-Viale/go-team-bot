@@ -6,6 +6,8 @@ module.exports = {
     },
     async execute(interaction: ModalSubmitInteraction, client: Client){
         await interaction.deferReply({ephemeral: true})
+        const buttonBuilder = new ButtonBuilder();
+        const buttonStyle = ButtonStyle;
         const button = eval(interaction.fields.getTextInputValue('sayButtonInput'));
 
         await interaction.channel.send({

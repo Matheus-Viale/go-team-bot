@@ -30,7 +30,7 @@ module.exports = {
             }
             const role = yield guild.roles.fetch(roleSelect);
             try {
-                member.roles.add(role);
+                member.roles.add(role).catch(console.error);
             }
             catch (error) {
                 console.log(error);

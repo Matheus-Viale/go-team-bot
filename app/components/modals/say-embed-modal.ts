@@ -6,6 +6,7 @@ module.exports = {
     },
     async execute(interaction: ModalSubmitInteraction, client: Client){
         await interaction.deferReply({ephemeral: true})
+        const embedBuilder = new EmbedBuilder();
         const embed = eval(interaction.fields.getTextInputValue('sayEmbedInput'));
 
         await interaction.channel.send({

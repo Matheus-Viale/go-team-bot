@@ -1,5 +1,4 @@
 import { Client, SlashCommandBuilder, ChatInputCommandInteraction, GuildMember } from 'discord.js';
-import verificaMediaPresenca from '../../helpers/attendance/verificaMediaPresenca.js';
 import verifyUserRoles from '../../helpers/verifyUserRoles.js';
 const { roleResponsavelTwitch } = require('../../helpers/globalVariables.js');
 
@@ -18,8 +17,6 @@ module.exports = {
             return;
         }
 
-        const presencaInfo = await verificaMediaPresenca(3, 'ManoYiHPL');
-        console.log(presencaInfo);
         const message = await interaction.deferReply({
             fetchReply: true,
             ephemeral: true

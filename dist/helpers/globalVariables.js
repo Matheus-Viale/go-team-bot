@@ -51,7 +51,8 @@ if (process.env.GUILD_ID == '1062930211047477338') {
         channelRecrutados: '1071536284042018826',
         channelTranscript: '1071807324722839592',
         grupoWpp: '120363030374812808@g.us',
-        categoryTickets: '1071547227975192686'
+        categoryTickets: '1071547227975192686',
+        idPreenchimento: "646677ed01b5019ef1b63839"
     };
 }
 //Ambiente de Prod
@@ -83,13 +84,13 @@ if (process.env.GUILD_ID == '818562930181275740') {
         channelMarcarTwitch: '843528956572860446',
         channelSolicitacaoAgendamentosStaff: '1069747803292713050',
         channelsSolicitacaoAgendamentosStaff: {
-            agendamentos10: '',
-            agendamentos12: '',
-            agendamentos14: '',
-            agendamentos16: '',
-            agendamentos18: '',
-            agendamentos20: '',
-            agendamentos22: '',
+            agendamentos10: '1079317861371215952',
+            agendamentos12: '1079317956288335932',
+            agendamentos14: '1079318139730403358',
+            agendamentos16: '1079318166087409664',
+            agendamentos18: '1079318185855176734',
+            agendamentos20: '1079318205614530610',
+            agendamentos22: '1079318226011443310',
         },
         channelJustificativaFaltaStaff: '1069747789145309264',
         channelNotificacoesStreamer: '1069748212270891098',
@@ -108,5 +109,6 @@ if (process.env.GUILD_ID == '818562930181275740') {
         channelTranscript: '944985597028737034',
         grupoWpp: '5522998252084-1615130352@g.us',
         categoryTickets: '909860587104784404',
+        idPreenchimento: ''
     };
 }

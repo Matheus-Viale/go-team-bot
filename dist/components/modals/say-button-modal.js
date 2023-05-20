@@ -17,6 +17,8 @@ module.exports = {
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
+            const buttonBuilder = new discord_js_1.ButtonBuilder();
+            const buttonStyle = discord_js_1.ButtonStyle;
             const button = eval(interaction.fields.getTextInputValue('sayButtonInput'));
             yield interaction.channel.send({
                 components: [new discord_js_1.ActionRowBuilder().addComponents([button])]

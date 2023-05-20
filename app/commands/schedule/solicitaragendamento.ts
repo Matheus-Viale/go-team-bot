@@ -1,9 +1,11 @@
 import { Client, ChatInputCommandInteraction, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, GuildMember, GuildTextBasedChannel } from 'discord.js';
+import verificadorPresenca from '../../helpers/attendance/verificadorPresenca.js';
 import verificaLivesRecentes from '../../helpers/attendance/verificaLivesRecentes.js';
 import verificaMediaPresenca from '../../helpers/attendance/verificaMediaPresenca.js';
 import verificaDias from '../../helpers/verificaDias.js';
 import verifyUserRoles from '../../helpers/verifyUserRoles.js';
-const {roleStreamerGoTeam, channelSolicitacaoAgendamentosStaff, channelMarcarTwitch, channelsSolicitacaoAgendamentosStaff} = require('../../helpers/globalVariables.js');
+import Preenchimento from "../../schemas/preenchimento";
+const {roleStreamerGoTeam, channelMarcarTwitch, channelsSolicitacaoAgendamentosStaff, idPreenchimento} = require('../../helpers/globalVariables.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -39,14 +41,6 @@ module.exports = {
                 )
                 .setRequired(true)
         )
-        .addStringOption((option) =>
-                option
-                    .setName('preenchimento')
-                    .setDescription('MARCAR SIM APENAS COM AUTORIZAÇÃO DA STAFF!')
-                    .setChoices(
-                        {name: 'SIM', value: 'sim'}
-                    )
-        )
 
     
     ,
@@ -71,6 +65,24 @@ module.exports = {
         }
 
 
+        const streamerTwitch = streamerNickname.split('/')[1];
+
+        const verificaMod = await verificadorPresenca(streamerTwitch.toLowerCase());
+
+        if(verificaMod.status != 200){
+            if(verificaMod.status == 403){
+                interaction.editReply({
+                    content: 'Você não adicionou nosso canal como MOD na sua live, por gentileza no chat da sua live digite "/mod goteamstreamers" para adiciona-lo, isso é necessário para podermos verificar a presença nas lives!'
+                });
+                return;
+            } else{
+                interaction.editReply({
+                    content: `O erro ${verificaMod.status} ocorreu, favor comunique a STAFF sobre o ocorrido!`
+                });
+                return;
+            }
+        }
+
 
         let streamerAvatar = streamer.user.avatarURL();
 
@@ -78,28 +90,27 @@ module.exports = {
             streamerAvatar = 'https://cdn2.unrealengine.com/egs-discord-discord-s10-512x512-22ee7a1e5199.png';
         }
 
-        const streamerTwitch = streamerNickname.split('/')[1];
         const dia = interaction.options.getString('dia');
         const horario = interaction.options.getInteger('horario');
         const horarioString = horario + ':00';
-        const preenchimento = interaction.options.getString('preenchimento');
+        const preenchimento = await Preenchimento.findOne({_id: idPreenchimento});
         const horaSolicitacao = new Date().getHours();
         const horarioCorreto = horaSolicitacao < 12 || horaSolicitacao > 21;
 
-        if(preenchimento != 'sim' && horarioCorreto){
+        if(preenchimento.statusPreenchimento != 'ativado' && horarioCorreto){
             await interaction.editReply({
-                content: 'O horário de agendamento é das 12:00 às 21:00 (Horário de Brasilia) ou 15:00 às 00:00 (Horário de Lisboa), caso a STAFF tenha solicitado, marcar a opção SIM em preenchimento'
+                content: 'O horário de agendamento é das 12:00 às 21:00 (Horário de Brasilia) ou 15:00 às 00:00 (Horário de Lisboa), caso haja necessidade de preenchimento a STAFF irá liberar os agendamentos'
             });
             return;
         }
 
-        /*const situacaoAgendamento = verificaDias(dia);
+        const situacaoAgendamento = verificaDias(dia);
         if(!situacaoAgendamento.liberarAgendamento){
             await interaction.editReply({
                 content: 'Os agendamentos são para o dia seguinte (ou para hoje caso seja um preenchimento), por favor, faça o agendamento selecionando o dia da semana correto!'
             });
             return;
-        }*/
+        }
 
         const embedUser = new EmbedBuilder()
             .setColor(0x6441A5)
