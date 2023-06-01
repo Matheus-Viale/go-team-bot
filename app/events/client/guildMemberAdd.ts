@@ -36,11 +36,11 @@ module.exports = {
                 {name: 'Quer apenas ver dicas, interagir e jogar com o pessoal da comunidade?', value: `Sem problemas, todo mundo é bem-vindo, basta ir no canal, <#${channelApenasVisitando}> e clicar no botão "Visitar"!`},
                 {name: '\u200B', value: '\u200B'},
                 {name: 'Nossas Redes', value:'\u200B'},
-                {name: '📺', value: `[Twitch](https://www.twitch.tv/goteamtv/about)`, inline: true},
-                {name: '🔥', value: `[Instagram](https://www.instagram.com/goteamtv/)`, inline: true},
+                {name: '📺', value: `[Twitch](https://www.twitch.tv/goteamstreamers)`, inline: true},
+                {name: '🔥', value: `[Instagram](https://www.instagram.com/goteamstreamers)`, inline: true},
                 {name: '\u200B', value: '\u200B'},
-                {name: '🐦', value: `[Twitter](https://twitter.com/goteam_tv)`, inline: true},
-                {name: '🎮', value: `[Steam](https://store.steampowered.com/curator/40326341/)`, inline: true},
+                {name: '🐦', value: `[Twitter](https://twitter.com/goteamstreamers)`, inline: true},
+                {name: '🎮', value: `[Steam](https://store.steampowered.com/curator/42609717/)`, inline: true},
             )
         ;
 
