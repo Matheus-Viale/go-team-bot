@@ -24,7 +24,7 @@ module.exports = {
         const member = (interaction.member as GuildMember);
 
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;
@@ -43,14 +43,14 @@ module.exports = {
         const horarios = await verificaHorariosVagos(dataString);
 
         if(horarios.status == 'SEM AGENDAMENTO'){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não existe agendamento criado para a data ${dataString}`
             });
             return;
         }
 
         if(horarios.status == 'SEM VAGAS'){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não existe vagas na data ${dataString}`
             });
             return;
@@ -90,7 +90,7 @@ module.exports = {
             messagemPreenchimento = 'e houve um erro em alterar o preenchimento, favor tente manualmente!'
         }
         
-        interaction.editReply({
+        await interaction.editReply({
             content: `Notificação enviada no canal <#${channelMarcarTwitch}> ` + messagemPreenchimento
         });
         

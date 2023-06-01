@@ -14,10 +14,6 @@ module.exports = {
                 await command.execute(interaction, client);
             } catch (error) {
                 console.error(error);
-                await interaction.reply({
-                    content: 'Não consegui executar o comando, tente novamente ou entre em contato com o suporte!',
-                    ephemeral: true
-                })
             }
         } else if(interaction.isButton()){
             const { buttons } = client;

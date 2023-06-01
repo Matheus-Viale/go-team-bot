@@ -17,6 +17,7 @@ module.exports = {
     },
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield interaction.deferReply({ ephemeral: true });
             const twitch = interaction.message.embeds[0].fields[0].value;
             const guild = yield client.guilds.fetch(guildId);
             const aprovadorUser = interaction.user.username;
@@ -29,9 +30,8 @@ module.exports = {
             messageStaff.embeds[1].footer.text = `${new Date().toLocaleDateString('pt-BR')} - ${new Date().toLocaleTimeString('pt-BR')}`;
             const chanelTicketFetch = yield guild.channels.fetch(channelTicketId).catch((error) => __awaiter(this, void 0, void 0, function* () {
                 yield interaction.message.delete();
-                interaction.reply({
-                    content: `O ticket já foi fechado, você pode ver o relatório no canal <#${channelTranscript}>`,
-                    ephemeral: true
+                yield interaction.editReply({
+                    content: `O ticket já foi fechado, você pode ver o relatório no canal <#${channelTranscript}>`
                 });
             }));
             const embedTicket = new discord_js_1.EmbedBuilder()
@@ -43,7 +43,7 @@ module.exports = {
                 content: `<@${memberId}>`,
                 embeds: [embedTicket]
             });
-            interaction.update({
+            yield interaction.update({
                 content: `${aprovadorUser} reprovou o recrutamento de ${twitch}!`,
                 embeds: messageStaff.embeds,
                 components: []

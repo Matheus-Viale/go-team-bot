@@ -32,7 +32,7 @@ module.exports = {
             yield interaction.deferReply({ ephemeral: true });
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
@@ -44,7 +44,7 @@ module.exports = {
             const dataStringAgendamento = dataAgendamento.toLocaleDateString('pt-BR');
             let agendamentoCriado = yield agendamento_js_1.default.findOne({ diaAgendamento: dataStringAgendamento });
             if (!agendamentoCriado) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Não existe agendamento criado para o dia ${dataStringAgendamento}, favor criar usando /agendamentocompleto`
                 });
                 return;

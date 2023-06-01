@@ -14,10 +14,12 @@ const enviaMensagemAbertura_js_1 = require("../messages/enviaMensagemAbertura.js
 const enviaMensagemAberturaWpp_js_1 = require("../messages/enviaMensagemAberturaWpp.js");
 const enviaMensagemFechamento_js_1 = require("../messages/enviaMensagemFechamento.js");
 const enviaMensagemFechamentoWpp_js_1 = require("../messages/enviaMensagemFechamentoWpp.js");
+const alteraStatusPreenchimento_js_1 = require("../alteraStatusPreenchimento.js");
 const agendaAberturaFechamento = (client) => __awaiter(void 0, void 0, void 0, function* () {
     schedule.scheduleJob('mensageAbertura', '0 12 * * *', () => __awaiter(void 0, void 0, void 0, function* () {
         (0, enviaMensagemAbertura_js_1.default)(client);
         (0, enviaMensagemAberturaWpp_js_1.default)();
+        (0, alteraStatusPreenchimento_js_1.default)('desativado');
     }));
     schedule.scheduleJob('mensagemFechamento', '0 21 * * *', () => __awaiter(void 0, void 0, void 0, function* () {
         (0, enviaMensagemFechamento_js_1.default)(client);

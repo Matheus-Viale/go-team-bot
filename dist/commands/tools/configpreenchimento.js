@@ -11,15 +11,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
-const schedule = require("node-schedule");
 const { roleResponsavelTwitch } = require('../../helpers/globalVariables.js');
+const alteraStatusPreenchimento_1 = require("../../helpers/alteraStatusPreenchimento");
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
-        .setName('consultaprogramacoes')
-        .setDescription('Retorna a lista dos eventos programados!'),
+        .setName('configpreenchimento')
+        .setDescription('Configura o preenchimento para ativado ou desativado!')
+        .addStringOption((option) => option
+        .setName('status')
+        .setDescription('Qual status você gostaria no preenchimento?')
+        .setChoices({ name: 'Ativado', value: 'ativado' }, { name: 'Desativado', value: 'desativado' })
+        .setRequired(true)),
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply({ ephemeral: true });
+            yield interaction.deferReply({
+                ephemeral: true
+            });
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
                 yield interaction.editReply({
@@ -27,15 +34,26 @@ module.exports = {
                 });
                 return;
             }
-            const jobs = schedule.scheduledJobs;
-            const jobsNames = [];
-            for (const job of Object.keys(jobs)) {
-                jobsNames.push(job);
+            const status = interaction.options.getString('status');
+            const retorno = yield (0, alteraStatusPreenchimento_1.default)(status);
+            if (retorno == 'IGUAL') {
+                yield interaction.editReply({
+                    content: `O preenchimento já se encontra com o status (${status})`
+                });
+                return;
             }
-            const newMessage = `Jobs Agendados:\n\n${jobsNames.join('\n')}`;
-            yield interaction.editReply({
-                content: newMessage
-            });
+            if (retorno == 'ALTERADO') {
+                yield interaction.editReply({
+                    content: `O preenchimento foi alterado para o status (${status})`
+                });
+                return;
+            }
+            if (retorno == 'ERROR') {
+                yield interaction.editReply({
+                    content: `Houve um erro na troca do status do preenchimento, por favor tente novamente, se persistir entre em contato com o suporte!`
+                });
+                return;
+            }
         });
     }
 };

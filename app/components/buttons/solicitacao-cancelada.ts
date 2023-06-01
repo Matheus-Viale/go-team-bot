@@ -28,7 +28,7 @@ module.exports = {
         interaction.message.components[0].components[2].data.disabled = true;
         interaction.message.components[1].components[0].data.disabled = true;*/
 
-        interaction.update({
+        await interaction.update({
             content: `${aprovadorUser} cancelou a solicitação de ${streamerTwitch}, para ${dia} às ${horario} a pedido do streamer!`,
             embeds: messageStaff.embeds,
             components:[]
@@ -56,5 +56,6 @@ module.exports = {
 
         messageStaff.react('🏳️')
         messageUser.react('🏳️')
+
     }
 }

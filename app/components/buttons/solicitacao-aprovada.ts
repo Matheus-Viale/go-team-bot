@@ -7,6 +7,7 @@ module.exports = {
         name: 'solicitacao-aprovada'
     },
     async execute(interaction: ButtonInteraction, client: Client){
+        await interaction.deferReply({ephemeral: true});
         const channelNotificacoesFetch = (await client.channels.fetch(channelNotificacoesStreamer) as GuildTextBasedChannel);
         const aprovadorUser = interaction.user.username;
         const footerText = interaction.message.embeds[0].data.footer.text;
@@ -25,17 +26,15 @@ module.exports = {
         const statusAgendamento = await agendaSolicitacaoAprovada(streamerId, streamerTwitch, dia, horario, client);
 
         if(statusAgendamento == 'INVALIDO'){
-            interaction.reply({
-                content:`Não foi possível realizar o agendamento pois o dia ${dia}, não é valido para agendamentos hoje!`,
-                ephemeral: true
+            await interaction.editReply({
+                content:`Não foi possível realizar o agendamento pois o dia ${dia}, não é valido para agendamentos hoje!`
             })
             return;
         }
 
         if(statusAgendamento == 'OCUPADO'){
-            interaction.reply({
-                content:`Não foi possível realizar o agendamento pois o dia ${dia} no horário das ${horario}, já está preenchido!`,
-                ephemeral: true
+            await interaction.editReply({
+                content:`Não foi possível realizar o agendamento pois o dia ${dia} no horário das ${horario}, já está preenchido!`
             })
             return;
         }
@@ -45,7 +44,7 @@ module.exports = {
             messageStaff.embeds[0].data.color = 0x03c03c;
             messageUser.embeds[0].data.color = 0x03c03c;
             
-            interaction.update({
+            await interaction.update({
                 content: `${aprovadorUser} aprovou a live de ${streamerTwitch}, para ${dia} às ${horario}`,
                 embeds: messageStaff.embeds,
                 components:[]

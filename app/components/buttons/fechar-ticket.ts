@@ -51,9 +51,9 @@ module.exports = {
         channelTranscriptFetch.send({
             embeds:[embed],
             files:[transcript]
-        }).catch(error =>{
+        }).catch(async error =>{
             console.log(error)
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Houve um erro e não consegui enviar a transcrição, favor entrar em contato com a STAFF'
             })
             return;
@@ -63,7 +63,7 @@ module.exports = {
             member.roles.remove(roleOpenTicketFetch)
         } catch (error) {
             console.log(error)
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Houve um erro e não foi possível remover o usuário <@${member.displayName}> do cargo openTicket, favor entrar em contato com a STAFF`
             })
             return;
@@ -73,7 +73,7 @@ module.exports = {
             channel.delete()
         } catch (error) {
             console.log(error)
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Houve um erro e não foi possível remover o canal <#${channel.name}>, favor entrar em contato com a STAFF`
             })
             return;

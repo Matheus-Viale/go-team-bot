@@ -39,7 +39,7 @@ module.exports = {
             const { guild } = interaction;
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
@@ -49,7 +49,7 @@ module.exports = {
             const streamerId = streamer.id;
             const streamerNickname = streamer.displayName;
             if (!streamerNickname.toLowerCase().includes('twitch.tv/')) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Nome do streamer não está no padrão twitch.tv/NickTwitch, alterar antes de agendar!'
                 });
                 return;
@@ -64,13 +64,13 @@ module.exports = {
             const dataStringAgendamento = dataAgendamento.toLocaleDateString('pt-BR');
             let agendamentoCriado = yield agendamento_js_1.default.findOne({ diaAgendamento: dataStringAgendamento });
             if (!agendamentoCriado) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Não existe tabela de agendamento criado para o dia ${dataStringAgendamento}, favor criar usando /agendamentocompleto`
                 });
                 return;
             }
             if (agendamentoCriado[horarioTag] != 'nenhum') {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `O streamer ${agendamentoCriado[horarioTag]} já está agendado para o horário das ${horario}:00, se deseja substituir usar o comando /alteraragendamento`
                 });
                 return;
@@ -82,7 +82,7 @@ module.exports = {
                 channelAgendamentoStaffFetch.send({
                     content: `Agenda da data ${novoAgendamento.diaAgendamento} foi atualizada por ${member.displayName} com o streamer ${streamerTwitch} agendado para o horário das ${horario}:00`
                 });
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Agenda da data ${novoAgendamento.diaAgendamento} atualizada com o streamer ${streamerTwitch} agendado para o horário das ${horario}:00`
                 });
             }));

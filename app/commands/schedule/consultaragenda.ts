@@ -12,7 +12,7 @@ module.exports = {
             await interaction.deferReply({ephemeral: true});
             const member = (interaction.member as GuildMember);
             if(!await verifyUserRoles(member, roleStreamerGoTeam)){
-                interaction.editReply({
+                await interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 })
                 return;
@@ -22,7 +22,7 @@ module.exports = {
 
             let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
             if(!agendamentoCriado){
-                interaction.editReply({
+                await interaction.editReply({
                     content: `A agenda do dia ${dataStringAgendamento} ainda não foi montada!`
                 });
                 return;

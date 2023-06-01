@@ -37,7 +37,7 @@ module.exports = {
             interaction.message.components[0].components[1].data.disabled = true;
             interaction.message.components[0].components[2].data.disabled = true;
             interaction.message.components[1].components[0].data.disabled = true;*/
-            interaction.update({
+            yield interaction.update({
                 content: `${aprovadorUser} reprovou a live de ${streamerTwitch}, para ${dia} às ${horario} por prioridade!`,
                 embeds: messageStaff.embeds,
                 components: []

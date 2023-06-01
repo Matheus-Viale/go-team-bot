@@ -48,7 +48,7 @@ module.exports = {
         await interaction.deferReply({ephemeral: true})
         const streamer = (interaction.member as GuildMember);
         if(!await verifyUserRoles(streamer, roleStreamerGoTeam)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;
@@ -58,7 +58,7 @@ module.exports = {
         const streamerNickname = streamer.displayName;
 
         if(!streamerNickname.toLowerCase().includes('twitch.tv/')){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Seu nome não está no padrão twitch.tv/NickTwitch, solicite a alguém da STAFF para alterar antes de agendar!'
             });
             return;

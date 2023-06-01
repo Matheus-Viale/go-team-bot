@@ -38,7 +38,7 @@ module.exports = {
         await interaction.deferReply({ephemeral: true})
         const member = (interaction.member as GuildMember);
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;
@@ -59,14 +59,14 @@ module.exports = {
         let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
         
         if(!agendamentoCriado){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não existe agendamento criado para o dia ${dataStringAgendamento}`
             });
             return;
         }
 
         if(agendamentoCriado[horarioTag] == 'nenhum'){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não há nenhum streamer agendado para o dia ${agendamentoCriado.diaAgendamento} no horário das ${horario}:00`
             })
             return;
@@ -79,7 +79,7 @@ module.exports = {
             channelAgendamentoStaffFetch.send({
                 content: `Agendamento da data ${novoAgendamento.diaAgendamento} no horário das ${horario} foi removido por ${member.displayName}!`
             })
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Agendamento da data ${novoAgendamento.diaAgendamento} no horário das ${horario} foi removido!`
             })
         })

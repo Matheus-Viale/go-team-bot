@@ -19,15 +19,14 @@ module.exports = {
         .setDescription('Retorna meu ping!'),
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield interaction.deferReply({ ephemeral: true });
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.reply({
-                    content: 'Você não tem permissão para usar este comando!',
-                    ephemeral: true
+                yield interaction.editReply({
+                    content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
             }
-            yield interaction.deferReply({ ephemeral: true });
             yield (0, enviaMensagemTeste_js_1.default)();
             yield interaction.editReply({
                 content: 'Mensagem teste enviada no grupo de teste!'

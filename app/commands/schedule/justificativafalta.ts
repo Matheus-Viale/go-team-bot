@@ -8,10 +8,10 @@ module.exports = {
         .setDescription('Use para avisar quando não puder acompanhar as lives!'),
     async execute(interaction: ChatInputCommandInteraction, client: Client){
         const member = (interaction.member as GuildMember)
+        await interaction.deferReply({ephemeral: true})
         if(!await verifyUserRoles(member, roleStreamerGoTeam)){
-            interaction.reply({
-                content: 'Você não tem permissão para usar este comando!',
-                ephemeral: true
+            await interaction.editReply({
+                content: 'Você não tem permissão para usar este comando!'
             })
             return;
         }     

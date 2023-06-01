@@ -46,7 +46,7 @@ module.exports = {
         await interaction.deferReply({ephemeral: true})
         const {guild, member} = interaction;
         if(!await verifyUserRoles((member as GuildMember), roleResponsavelTwitch)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;
@@ -60,7 +60,7 @@ module.exports = {
         const streamerNickname = streamer.displayName;
 
         if(!streamerNickname.toLowerCase().includes('twitch.tv/')){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Nome do streamer não está no padrão twitch.tv/NickTwitch, alterar antes de agendar!'
             });
             return;
@@ -79,14 +79,14 @@ module.exports = {
         let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
         
         if(!agendamentoCriado){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não existe agendamento criado para o dia ${dataStringAgendamento}, favor criar usando /agendamentocompleto`
             });
             return;
         }
 
         if(agendamentoCriado[(horarioTag as Tag)] == 'nenhum'){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não há nenhum streamer agendado para o dia ${agendamentoCriado.diaAgendamento} no horário das ${horario}:00, se deseja agendar usar o comando /agendamentosimples`
             })
             return;

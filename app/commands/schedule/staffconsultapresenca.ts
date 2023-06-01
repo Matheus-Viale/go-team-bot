@@ -33,7 +33,7 @@ module.exports = {
         await interaction.deferReply({ephemeral: true});
         const member = (interaction.member as GuildMember);
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;
@@ -73,7 +73,7 @@ module.exports = {
             )
         ;
 
-        interaction.editReply({
+        await interaction.editReply({
             embeds: [embed]
         })
 

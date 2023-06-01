@@ -46,7 +46,7 @@ module.exports = {
         const {guild} = interaction;
         const member = (interaction.member as GuildMember)
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;
@@ -60,7 +60,7 @@ module.exports = {
         const streamerNickname = streamer.displayName;
 
         if(!streamerNickname.toLowerCase().includes('twitch.tv/')){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Nome do streamer não está no padrão twitch.tv/NickTwitch, alterar antes de agendar!'
             })
             return;
@@ -78,14 +78,14 @@ module.exports = {
 
         let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
         if(!agendamentoCriado){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Não existe tabela de agendamento criado para o dia ${dataStringAgendamento}, favor criar usando /agendamentocompleto`
             });
             return;
         }
 
         if(agendamentoCriado[horarioTag] != 'nenhum'){
-            interaction.editReply({
+            await interaction.editReply({
                 content: `O streamer ${agendamentoCriado[horarioTag]} já está agendado para o horário das ${horario}:00, se deseja substituir usar o comando /alteraragendamento`
             });
             return;
@@ -98,7 +98,7 @@ module.exports = {
             channelAgendamentoStaffFetch.send({
                 content: `Agenda da data ${novoAgendamento.diaAgendamento} foi atualizada por ${member.displayName} com o streamer ${streamerTwitch} agendado para o horário das ${horario}:00`
             })
-            interaction.editReply({
+            await interaction.editReply({
                 content: `Agenda da data ${novoAgendamento.diaAgendamento} atualizada com o streamer ${streamerTwitch} agendado para o horário das ${horario}:00`
             })
         })

@@ -19,10 +19,10 @@ module.exports = {
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
             const member = interaction.member;
+            yield interaction.deferReply({ ephemeral: true });
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleStreamerGoTeam))) {
-                interaction.reply({
-                    content: 'Você não tem permissão para usar este comando!',
-                    ephemeral: true
+                yield interaction.editReply({
+                    content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
             }

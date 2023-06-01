@@ -15,7 +15,8 @@ const verificaLivesRecentes_js_1 = require("../../helpers/attendance/verificaLiv
 const verificaMediaPresenca_js_1 = require("../../helpers/attendance/verificaMediaPresenca.js");
 const verificaDias_js_1 = require("../../helpers/verificaDias.js");
 const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
-const { roleStreamerGoTeam, channelMarcarTwitch, channelsSolicitacaoAgendamentosStaff } = require('../../helpers/globalVariables.js');
+const preenchimento_1 = require("../../schemas/preenchimento");
+const { roleStreamerGoTeam, channelMarcarTwitch, channelsSolicitacaoAgendamentosStaff, idPreenchimento } = require('../../helpers/globalVariables.js');
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
         .setName('solicitaragendamento')
@@ -29,24 +30,20 @@ module.exports = {
         .setName('dia')
         .setDescription('Qual dia da semana você deseja agendar?')
         .setChoices({ name: 'Domingo', value: 'Domingo' }, { name: 'Segunda', value: 'Segunda-Feira' }, { name: 'Terça', value: 'Terça-Feira' }, { name: 'Quarta', value: 'Quarta-Feira' }, { name: 'Quinta', value: 'Quinta-Feira' }, { name: 'Sexta', value: 'Sexta-Feira' }, { name: 'Sábado', value: 'Sábado' })
-        .setRequired(true))
-        .addStringOption((option) => option
-        .setName('preenchimento')
-        .setDescription('MARCAR SIM APENAS COM AUTORIZAÇÃO DA STAFF!')
-        .setChoices({ name: 'SIM', value: 'sim' })),
+        .setRequired(true)),
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
             const streamer = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(streamer, roleStreamerGoTeam))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
             }
             const streamerNickname = streamer.displayName;
             if (!streamerNickname.toLowerCase().includes('twitch.tv/')) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Seu nome não está no padrão twitch.tv/NickTwitch, solicite a alguém da STAFF para alterar antes de agendar!'
                 });
                 return;
@@ -74,12 +71,12 @@ module.exports = {
             const dia = interaction.options.getString('dia');
             const horario = interaction.options.getInteger('horario');
             const horarioString = horario + ':00';
-            const preenchimento = interaction.options.getString('preenchimento');
+            const preenchimento = yield preenchimento_1.default.findOne({ _id: idPreenchimento });
             const horaSolicitacao = new Date().getHours();
             const horarioCorreto = horaSolicitacao < 12 || horaSolicitacao > 21;
-            if (preenchimento != 'sim' && horarioCorreto) {
+            if (preenchimento.statusPreenchimento != 'ativado' && horarioCorreto) {
                 yield interaction.editReply({
-                    content: 'O horário de agendamento é das 12:00 às 21:00 (Horário de Brasilia) ou 15:00 às 00:00 (Horário de Lisboa), caso a STAFF tenha solicitado, marcar a opção SIM em preenchimento'
+                    content: 'O horário de agendamento é das 12:00 às 21:00 (Horário de Brasilia) ou 15:00 às 00:00 (Horário de Lisboa), caso haja necessidade de preenchimento a STAFF irá liberar os agendamentos'
                 });
                 return;
             }

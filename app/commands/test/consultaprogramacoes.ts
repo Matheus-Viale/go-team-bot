@@ -9,16 +9,16 @@ module.exports = {
         .setName('consultaprogramacoes')
         .setDescription('Retorna a lista dos eventos programados!'),
     async execute(interaction: ChatInputCommandInteraction, client: Client){
+        await interaction.deferReply({ephemeral: true});
         const member = (interaction.member as GuildMember)
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.reply({
-                content: 'Você não tem permissão para usar este comando!',
-                ephemeral: true
+            await interaction.editReply({
+                content: 'Você não tem permissão para usar este comando!'
             })
             return;
         }
 
-        await interaction.deferReply({ephemeral: true});
+        
         
         const jobs = schedule.scheduledJobs;
         const jobsNames = []

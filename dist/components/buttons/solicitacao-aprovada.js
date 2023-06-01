@@ -18,6 +18,7 @@ module.exports = {
     },
     execute(interaction, client) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield interaction.deferReply({ ephemeral: true });
             const channelNotificacoesFetch = yield client.channels.fetch(channelNotificacoesStreamer);
             const aprovadorUser = interaction.user.username;
             const footerText = interaction.message.embeds[0].data.footer.text;
@@ -33,16 +34,14 @@ module.exports = {
             const horario = interaction.message.embeds[0].data.fields[2].value;
             const statusAgendamento = yield (0, agendaSolicitacaoAprovada_1.default)(streamerId, streamerTwitch, dia, horario, client);
             if (statusAgendamento == 'INVALIDO') {
-                interaction.reply({
-                    content: `Não foi possível realizar o agendamento pois o dia ${dia}, não é valido para agendamentos hoje!`,
-                    ephemeral: true
+                yield interaction.editReply({
+                    content: `Não foi possível realizar o agendamento pois o dia ${dia}, não é valido para agendamentos hoje!`
                 });
                 return;
             }
             if (statusAgendamento == 'OCUPADO') {
-                interaction.reply({
-                    content: `Não foi possível realizar o agendamento pois o dia ${dia} no horário das ${horario}, já está preenchido!`,
-                    ephemeral: true
+                yield interaction.editReply({
+                    content: `Não foi possível realizar o agendamento pois o dia ${dia} no horário das ${horario}, já está preenchido!`
                 });
                 return;
             }
@@ -50,7 +49,7 @@ module.exports = {
                 messageStaff.embeds[0].data.author.name = 'Solicitação APROVADA';
                 messageStaff.embeds[0].data.color = 0x03c03c;
                 messageUser.embeds[0].data.color = 0x03c03c;
-                interaction.update({
+                yield interaction.update({
                     content: `${aprovadorUser} aprovou a live de ${streamerTwitch}, para ${dia} às ${horario}`,
                     embeds: messageStaff.embeds,
                     components: []

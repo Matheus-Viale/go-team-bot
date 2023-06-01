@@ -6,8 +6,8 @@ import alteraStatusPreenchimento from '../../helpers/alteraStatusPreenchimento';
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('testepreenchimento')
-        .setDescription('Retorna meu ping!')
+        .setName('configpreenchimento')
+        .setDescription('Configura o preenchimento para ativado ou desativado!')
         .addStringOption((option) => 
             option
                 .setName('status')
@@ -26,7 +26,7 @@ module.exports = {
         
         const member = (interaction.member as GuildMember)
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.editReply({
+            await interaction.editReply({
                 content: 'Você não tem permissão para usar este comando!'
             })
             return;

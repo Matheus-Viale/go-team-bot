@@ -24,7 +24,7 @@ module.exports = {
 
         const chanelTicketFetch = await guild.channels.fetch(channelTicketId).catch(async (error) =>{
             await interaction.message.delete();
-            interaction.reply({
+            await interaction.reply({
                 content: `O ticket já foi fechado, você pode ver o relatório no canal <#${channelTranscript}>`,
                 ephemeral: true
             })
@@ -57,7 +57,7 @@ module.exports = {
             embeds:[embedTicket]
         });
 
-        interaction.update({
+        await interaction.update({
             content: `${aprovadorUser} aprovou o recrutamento de ${twitch}!`,
             embeds: messageStaff.embeds,
             components:[]

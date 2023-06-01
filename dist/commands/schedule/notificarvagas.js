@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const verificaHorariosVagos_js_1 = require("../../helpers/attendance/verificaHorariosVagos.js");
 const verifyUserRoles_js_1 = require("../../helpers/verifyUserRoles.js");
+const alteraStatusPreenchimento_js_1 = require("../../helpers/alteraStatusPreenchimento.js");
 const { roleResponsavelTwitch, channelMarcarTwitch, roleStreamerGoTeam } = require('../../helpers/globalVariables.js');
 module.exports = {
     data: new discord_js_1.SlashCommandBuilder()
@@ -27,7 +28,7 @@ module.exports = {
             yield interaction.deferReply({ ephemeral: true });
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
@@ -41,13 +42,13 @@ module.exports = {
                 diaString = 'AMANHÃ';
             const horarios = yield (0, verificaHorariosVagos_js_1.default)(dataString);
             if (horarios.status == 'SEM AGENDAMENTO') {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Não existe agendamento criado para a data ${dataString}`
                 });
                 return;
             }
             if (horarios.status == 'SEM VAGAS') {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Não existe vagas na data ${dataString}`
                 });
                 return;
@@ -67,8 +68,19 @@ module.exports = {
                 embeds: [embed],
                 content: `<@&${roleStreamerGoTeam}>\nHORÁRIOS DISPONIVEIS ${diaString}`
             });
-            interaction.editReply({
-                content: `Notificação enviada no canal <#${channelMarcarTwitch}>`
+            const retorno = yield (0, alteraStatusPreenchimento_js_1.default)('ativado');
+            let messagemPreenchimento;
+            if (retorno == 'ALTERADO') {
+                messagemPreenchimento = 'e o preenchimento foi ativado!';
+            }
+            if (retorno == 'IGUAL') {
+                messagemPreenchimento = 'e o preenchimento já estava ativado!';
+            }
+            if (retorno == 'ERROR') {
+                messagemPreenchimento = 'e houve um erro em alterar o preenchimento, favor tente manualmente!';
+            }
+            yield interaction.editReply({
+                content: `Notificação enviada no canal <#${channelMarcarTwitch}> ` + messagemPreenchimento
             });
         });
     }

@@ -6,6 +6,7 @@ module.exports = {
         name: 'recrutamento-reprovado'
     },
     async execute(interaction: ButtonInteraction, client: Client){
+        await interaction.deferReply({ephemeral: true});
         const twitch = interaction.message.embeds[0].fields[0].value;
         const guild = await client.guilds.fetch(guildId);
         const aprovadorUser = interaction.user.username;
@@ -20,9 +21,8 @@ module.exports = {
 
         const chanelTicketFetch = await guild.channels.fetch(channelTicketId).catch(async (error) =>{
             await interaction.message.delete();
-            interaction.reply({
-                content: `O ticket já foi fechado, você pode ver o relatório no canal <#${channelTranscript}>`,
-                ephemeral: true
+            await interaction.editReply({
+                content: `O ticket já foi fechado, você pode ver o relatório no canal <#${channelTranscript}>`
             })
         });
 
@@ -46,7 +46,7 @@ module.exports = {
             embeds:[embedTicket]
         });
 
-        interaction.update({
+        await interaction.update({
             content: `${aprovadorUser} reprovou o recrutamento de ${twitch}!`,
             embeds: messageStaff.embeds,
             components:[]

@@ -31,7 +31,7 @@ module.exports = {
             yield interaction.deferReply({ ephemeral: true });
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
@@ -56,7 +56,7 @@ module.exports = {
                 .setAuthor({ name: 'GO TEAM STREAMERS', iconURL: 'https://i.imgur.com/j1yOXKJ.png' })
                 .setThumbnail('https://i.imgur.com/j1yOXKJ.png')
                 .addFields({ name: '\u200B', value: '\u200B' }, { name: 'Média', value: `<@${streamerId}> esteve presente em ${presencaInfo.mediaPresenca} das verificações de das lives!` }, { name: '\u200B', value: '\u200B' }, { name: 'Total de Lives', value: `Nos últimos ${periodo} dias houveram ${presencaInfo.totalLives} verificações de lives!` }, { name: '\u200B', value: `\u200B` }, { name: 'Presença', value: `<@${streamerId}> estava presente em ${presencaInfo.presenca} verificações de lives!` });
-            interaction.editReply({
+            yield interaction.editReply({
                 embeds: [embed]
             });
         });

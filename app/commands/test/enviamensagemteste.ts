@@ -9,17 +9,17 @@ module.exports = {
         .setName('enviamensagemteste')
         .setDescription('Retorna meu ping!'),
     async execute(interaction: ChatInputCommandInteraction, client: Client){
+        await interaction.deferReply({ephemeral: true});
         const member = (interaction.member as GuildMember)
         if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-            interaction.reply({
-                content: 'Você não tem permissão para usar este comando!',
-                ephemeral: true
+            await interaction.editReply({
+                content: 'Você não tem permissão para usar este comando!'
             })
             return;
         }
-        await interaction.deferReply({ephemeral: true});
+        
 
-        await enviaMensagemTeste()
+        await enviaMensagemTeste();
 
         await interaction.editReply({
             content: 'Mensagem teste enviada no grupo de teste!'

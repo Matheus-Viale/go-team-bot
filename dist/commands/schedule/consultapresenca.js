@@ -27,14 +27,14 @@ module.exports = {
             yield interaction.deferReply({ ephemeral: true });
             const streamer = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(streamer, roleStreamerGoTeam))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
             }
             const streamerNickname = streamer.displayName;
             if (!streamerNickname.toLowerCase().includes('twitch.tv/')) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Seu nome não está no padrão twitch.tv/NickTwitch, solicite a alguém da STAFF para alterar antes de consultar!'
                 });
                 return;

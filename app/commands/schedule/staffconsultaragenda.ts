@@ -32,7 +32,7 @@ module.exports = {
 
             const member = (interaction.member as GuildMember);
             if(!await verifyUserRoles(member, roleResponsavelTwitch)){
-                interaction.editReply({
+                await interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 })
                 return;
@@ -46,7 +46,7 @@ module.exports = {
 
             let agendamentoCriado = await Agendamento.findOne({diaAgendamento: dataStringAgendamento});
             if(!agendamentoCriado){
-                interaction.editReply({
+                await interaction.editReply({
                     content: `Não existe agendamento criado para o dia ${dataStringAgendamento}, favor criar usando /agendamentocompleto`
                 });
                 return;

@@ -52,7 +52,7 @@ module.exports = {
             const { guild } = interaction;
             const member = interaction.member;
             if (!(yield (0, verifyUserRoles_js_1.default)(member, roleResponsavelTwitch))) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: 'Você não tem permissão para usar este comando!'
                 });
                 return;
@@ -64,7 +64,7 @@ module.exports = {
             const dataStringAgendamento = dataAgendamento.toLocaleDateString('pt-BR');
             let agendamentoCriado = yield agendamento_js_1.default.findOne({ diaAgendamento: dataStringAgendamento });
             if (agendamentoCriado) {
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Já existe um agendamento criado para o dia ${dataStringAgendamento}, favor utilizar os comandos /agendamentosimples, /alteraragendamento e /removeragendamento`
                 });
                 return;
@@ -92,7 +92,7 @@ module.exports = {
             }
             if (streamersErro.length > 0) {
                 const streamersErroString = streamersErro.join(', ');
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `O(s) nome(s) ${streamersErroString} não estão no padrão twitch.tv/NickTwitch, alterar antes de agendar!`
                 });
                 return;
@@ -113,7 +113,7 @@ module.exports = {
                 channelAgendamentoStaffFetch.send({
                     content: `${member.displayName} realizou o agendamento completo para: ${novoAgendamento.diaAgendamento}\nPara ver a agenda use **/staffconsultaragenda**`
                 });
-                interaction.editReply({
+                yield interaction.editReply({
                     content: `Agendamento para a data ${novoAgendamento.diaAgendamento} foi criado com sucesso!`
                 });
             }));
